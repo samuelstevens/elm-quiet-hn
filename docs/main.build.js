@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.M.A === region.R.A)
+	if (region.O.E === region.T.E)
 	{
-		return 'on line ' + region.M.A;
+		return 'on line ' + region.O.E;
 	}
-	return 'on lines ' + region.M.A + ' through ' + region.R.A;
+	return 'on lines ' + region.O.E + ' through ' + region.T.E;
 }
 
 
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
-		N: record.N,
-		K: record.K
+		s: func(record.s),
+		P: record.P,
+		M: record.M
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.N;
+		var message = !tag ? value : tag < 3 ? value.a : value.s;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.P;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.K) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.M) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3968,7 +3968,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.aT,
 		impl.aR,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.L && impl.L(sendToApp)
+			var divertHrefToApp = impl.N && impl.N(sendToApp)
 			var view = impl.aU;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -3982,7 +3982,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aq) && (_VirtualDom_doc.title = title = doc.aq);
+				(title !== doc.H) && (_VirtualDom_doc.title = title = doc.H);
 			});
 		}
 	);
@@ -4043,7 +4043,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		L: function(sendToApp)
+		N: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ag === next.ag
-							&& curr.X === next.X
-							&& curr.ad.a === next.ad.a
+							&& curr.ah === next.ah
+							&& curr.Z === next.Z
+							&& curr.ae.a === next.ae.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		am: _Browser_getScene(),
+		an: _Browser_getScene(),
 		as: {
 			au: _Browser_window.pageXOffset,
 			av: _Browser_window.pageYOffset,
 			at: _Browser_doc.documentElement.clientWidth,
-			W: _Browser_doc.documentElement.clientHeight
+			Y: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4248,7 +4248,7 @@ function _Browser_getScene()
 	var elem = _Browser_doc.documentElement;
 	return {
 		at: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		W: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		Y: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			am: {
+			an: {
 				at: node.scrollWidth,
-				W: node.scrollHeight
+				Y: node.scrollHeight
 			},
 			as: {
 				au: node.scrollLeft,
 				av: node.scrollTop,
 				at: node.clientWidth,
-				W: node.clientHeight
+				Y: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			am: _Browser_getScene(),
+			an: _Browser_getScene(),
 			as: {
 				au: x,
 				av: y,
 				at: _Browser_doc.documentElement.clientWidth,
-				W: _Browser_doc.documentElement.clientHeight
+				Y: _Browser_doc.documentElement.clientHeight
 			},
 			aC: {
 				au: x + rect.left,
 				av: y + rect.top,
 				at: rect.width,
-				W: rect.height
+				Y: rect.height
 			}
 		};
 	});
@@ -4365,19 +4365,19 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.T.a(response)));
+			callback(toTask(request.V.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.T.b, xhr)); });
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.V.b, xhr)); });
 		$elm$core$Maybe$isJust(request.ar) && _Http_track(router, xhr, request.ar.a);
 
 		try {
-			xhr.open(request.aH, request.H, true);
+			xhr.open(request.aH, request.y, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.H));
+			return done($elm$http$Http$BadUrl_(request.y));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -4394,12 +4394,12 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.V; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.X; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
 	xhr.timeout = request.aS.a || 0;
-	xhr.responseType = request.T.d;
+	xhr.responseType = request.V.d;
 	xhr.withCredentials = request.ax;
 }
 
@@ -4421,10 +4421,10 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		H: xhr.responseURL,
+		y: xhr.responseURL,
 		aP: xhr.status,
 		aQ: xhr.statusText,
-		V: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		X: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4520,17 +4520,63 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			aO: event.loaded,
-			an: event.total
+			ao: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			aM: event.loaded,
-			an: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			ao: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
-}var $elm$core$Basics$EQ = 1;
+}
+
+
+function _Time_now(millisToPosix)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(millisToPosix(Date.now())));
+	});
+}
+
+var _Time_setInterval = F2(function(interval, task)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var id = setInterval(function() { _Scheduler_rawSpawn(task); }, interval);
+		return function() { clearInterval(id); };
+	});
+});
+
+function _Time_here()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(
+			A2($elm$time$Time$customZone, -(new Date().getTimezoneOffset()), _List_Nil)
+		));
+	});
+}
+
+
+function _Time_getZoneName()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		try
+		{
+			var name = $elm$time$Time$Name(Intl.DateTimeFormat().resolvedOptions().timeZone);
+		}
+		catch (e)
+		{
+			var name = $elm$time$Time$Offset(new Date().getTimezoneOffset());
+		}
+		callback(_Scheduler_succeed(name));
+	});
+}
+var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
 var $elm$core$List$cons = _List_cons;
@@ -5034,7 +5080,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {U: fragment, X: host, ab: path, ad: port_, ag: protocol, ah: query};
+		return {W: fragment, Z: host, ac: path, ae: port_, ah: protocol, ai: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5313,11 +5359,15 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$document = _Browser_document;
+var $author$project$Main$LoadedFromLocalStorage = F2(
+	function (a, b) {
+		return {$: 2, a: a, b: b};
+	});
+var $author$project$Main$Never = {$: 0};
+var $elm$json$Json$Decode$decodeValue = _Json_run;
 var $author$project$Main$GotTopStories = function (a) {
 	return {$: 0, a: a};
 };
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
@@ -5338,6 +5388,8 @@ var $elm$http$Http$Sending = function (a) {
 	return {$: 0, a: a};
 };
 var $elm$http$Http$Timeout_ = {$: 1};
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$core$Maybe$isJust = function (maybe) {
 	if (!maybe.$) {
 		return true;
@@ -5936,7 +5988,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {aj: reqs, ao: subs};
+		return {ak: reqs, ap: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6010,7 +6062,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.aj));
+			A3($elm$http$Http$updateReqs, router, cmds, state.ak));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6053,7 +6105,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.ao)));
+					state.ap)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6069,12 +6121,12 @@ var $elm$http$Http$cmdMap = F2(
 				{
 					ax: r.ax,
 					az: r.az,
-					T: A2(_Http_mapExpect, func, r.T),
-					V: r.V,
+					V: A2(_Http_mapExpect, func, r.V),
+					X: r.X,
 					aH: r.aH,
 					aS: r.aS,
 					ar: r.ar,
-					H: r.H
+					y: r.y
 				});
 		}
 	});
@@ -6097,123 +6149,308 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{ax: false, az: r.az, T: r.T, V: r.V, aH: r.aH, aS: r.aS, ar: r.ar, H: r.H}));
+			{ax: false, az: r.az, V: r.V, X: r.X, aH: r.aH, aS: r.aS, ar: r.ar, y: r.y}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{az: $elm$http$Http$emptyBody, T: r.T, V: _List_Nil, aH: 'GET', aS: $elm$core$Maybe$Nothing, ar: $elm$core$Maybe$Nothing, H: r.H});
+		{az: $elm$http$Http$emptyBody, V: r.V, X: _List_Nil, aH: 'GET', aS: $elm$core$Maybe$Nothing, ar: $elm$core$Maybe$Nothing, y: r.y});
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $elm$json$Json$Decode$list = _Json_decodeList;
 var $author$project$Main$topStoriesDecoder = $elm$json$Json$Decode$list($elm$json$Json$Decode$int);
-var $author$project$Main$init = function (flags) {
-	return _Utils_Tuple2(
-		{r: '', B: $elm$core$Dict$empty, G: _List_Nil},
-		$elm$http$Http$get(
-			{
-				T: A2($elm$http$Http$expectJson, $author$project$Main$GotTopStories, $author$project$Main$topStoriesDecoder),
-				H: 'https://hacker-news.firebaseio.com/v0/topstories.json'
-			}));
+var $author$project$Main$getTopStories = $elm$http$Http$get(
+	{
+		V: A2($elm$http$Http$expectJson, $author$project$Main$GotTopStories, $author$project$Main$topStoriesDecoder),
+		y: 'https://hacker-news.firebaseio.com/v0/topstories.json'
+	});
+var $author$project$Main$Model = F3(
+	function (stories, err, lastUpdated) {
+		return {m: err, r: lastUpdated, l: stories};
+	});
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$null = _Json_decodeNull;
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $elm$json$Json$Decode$nullable = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				$elm$json$Json$Decode$null($elm$core$Maybe$Nothing),
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder)
+			]));
+};
+var $author$project$Main$Id = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Main$makeId = function (id) {
+	return $author$project$Main$Id(
+		{q: id});
+};
+var $author$project$Main$idStoryDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$author$project$Main$makeId,
+	A2($elm$json$Json$Decode$field, 'id', $elm$json$Json$Decode$int));
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $author$project$Main$Loaded = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$makeLoaded = F3(
+	function (id, url, title) {
+		return $author$project$Main$Loaded(
+			{q: id, H: title, y: url});
+	});
+var $elm$json$Json$Decode$map3 = _Json_map3;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Main$loadedStoryDecoder = A4(
+	$elm$json$Json$Decode$map3,
+	$author$project$Main$makeLoaded,
+	A2(
+		$elm$json$Json$Decode$andThen,
+		function (val) {
+			var _v0 = $elm$core$String$toInt(val);
+			if (!_v0.$) {
+				var i = _v0.a;
+				return $elm$json$Json$Decode$succeed(i);
+			} else {
+				return $elm$json$Json$Decode$fail('item id is not an integer.');
+			}
+		},
+		A2($elm$json$Json$Decode$field, 'id', $elm$json$Json$Decode$string)),
+	A2($elm$json$Json$Decode$field, 'url', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'title', $elm$json$Json$Decode$string));
+var $author$project$Main$storyHelp = function (s) {
+	if (!s.$) {
+		var title = s.a;
+		return $author$project$Main$loadedStoryDecoder;
+	} else {
+		return $author$project$Main$idStoryDecoder;
+	}
+};
+var $author$project$Main$diskStoryDecoder = A2(
+	$elm$json$Json$Decode$andThen,
+	$author$project$Main$storyHelp,
+	$elm$json$Json$Decode$nullable(
+		A2($elm$json$Json$Decode$field, 'title', $elm$json$Json$Decode$string)));
+var $author$project$Main$At = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$json$Json$Decode$maybe = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder),
+				$elm$json$Json$Decode$succeed($elm$core$Maybe$Nothing)
+			]));
+};
+var $elm$time$Time$Posix = $elm$core$Basics$identity;
+var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
+var $author$project$Main$lastUpdatedDecoder = A2(
+	$elm$json$Json$Decode$andThen,
+	function (val) {
+		if (!val.$) {
+			var t = val.a;
+			return $elm$json$Json$Decode$succeed(
+				$author$project$Main$At(
+					$elm$time$Time$millisToPosix(t)));
+		} else {
+			return $elm$json$Json$Decode$succeed($author$project$Main$Never);
+		}
+	},
+	$elm$json$Json$Decode$maybe(
+		A2($elm$json$Json$Decode$field, 'lastUpdated', $elm$json$Json$Decode$int)));
+var $author$project$Main$modelDecoder = A4(
+	$elm$json$Json$Decode$map3,
+	$author$project$Main$Model,
+	A2(
+		$elm$json$Json$Decode$field,
+		'stories',
+		$elm$json$Json$Decode$list($author$project$Main$diskStoryDecoder)),
+	$elm$json$Json$Decode$succeed(
+		$elm$core$Maybe$Just('')),
+	$author$project$Main$lastUpdatedDecoder);
+var $elm$time$Time$Name = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$time$Time$Offset = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 0, a: a, b: b};
+	});
+var $elm$time$Time$customZone = $elm$time$Time$Zone;
+var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
+var $author$project$Main$init = function (args) {
+	var _v0 = A2($elm$json$Json$Decode$decodeValue, $author$project$Main$modelDecoder, args);
+	if (!_v0.$) {
+		var model = _v0.a;
+		return _Utils_Tuple2(
+			model,
+			A2(
+				$elm$core$Task$perform,
+				$author$project$Main$LoadedFromLocalStorage(model),
+				$elm$time$Time$now));
+	} else {
+		var err = _v0.a;
+		switch (err.$) {
+			case 0:
+				var field = err.a;
+				var msg = err.b;
+				return _Utils_Tuple2(
+					{m: $elm$core$Maybe$Nothing, r: $author$project$Main$Never, l: _List_Nil},
+					$author$project$Main$getTopStories);
+			case 3:
+				var fail = err.a;
+				return _Utils_Tuple2(
+					{m: $elm$core$Maybe$Nothing, r: $author$project$Main$Never, l: _List_Nil},
+					$author$project$Main$getTopStories);
+			default:
+				return _Utils_Tuple2(
+					{
+						m: $elm$core$Maybe$Just('Unknown error'),
+						r: $author$project$Main$Never,
+						l: _List_Nil
+					},
+					$author$project$Main$getTopStories);
+		}
+	}
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$Main$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$none;
 };
+var $author$project$Main$UpdatedCache = function (a) {
+	return {$: 3, a: a};
+};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(0),
+			pairs));
+};
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$Main$encodeStory = function (story) {
+	if (!story.$) {
+		var title = story.a.H;
+		var url = story.a.y;
+		var id = story.a.q;
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'id',
+					$elm$json$Json$Encode$string(
+						$elm$core$String$fromInt(id))),
+					_Utils_Tuple2(
+					'title',
+					$elm$json$Json$Encode$string(title)),
+					_Utils_Tuple2(
+					'url',
+					$elm$json$Json$Encode$string(url))
+				]));
+	} else {
+		var id = story.a.q;
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'id',
+					$elm$json$Json$Encode$string(
+						$elm$core$String$fromInt(id)))
+				]));
+	}
+};
+var $elm$json$Json$Encode$int = _Json_wrap;
+var $elm$json$Json$Encode$list = F2(
+	function (func, entries) {
+		return _Json_wrap(
+			A3(
+				$elm$core$List$foldl,
+				_Json_addEntry(func),
+				_Json_emptyArray(0),
+				entries));
+	});
+var $elm$time$Time$posixToMillis = function (_v0) {
+	var millis = _v0;
+	return millis;
+};
+var $author$project$Main$encodeModel = function (model) {
+	var _v0 = model.r;
+	if (_v0.$ === 1) {
+		var t = _v0.a;
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'stories',
+					A2($elm$json$Json$Encode$list, $author$project$Main$encodeStory, model.l)),
+					_Utils_Tuple2(
+					'lastUpdated',
+					$elm$json$Json$Encode$int(
+						$elm$time$Time$posixToMillis(t)))
+				]));
+	} else {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'stories',
+					A2($elm$json$Json$Encode$list, $author$project$Main$encodeStory, model.l))
+				]));
+	}
+};
 var $author$project$Main$GotStory = function (a) {
 	return {$: 1, a: a};
 };
-var $author$project$Main$Story = F3(
-	function (id, url, title) {
-		return {Y: id, aq: title, H: url};
+var $author$project$Main$makeUrl = F2(
+	function (id, maybe) {
+		if (!maybe.$) {
+			var url = maybe.a;
+			return url;
+		} else {
+			return 'https://news.ycombinator.com/item?id=' + $elm$core$String$fromInt(id);
+		}
 	});
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded = A2($elm$core$Basics$composeR, $elm$json$Json$Decode$succeed, $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom);
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $elm$json$Json$Decode$decodeValue = _Json_run;
-var $elm$json$Json$Decode$fail = _Json_fail;
-var $elm$json$Json$Decode$null = _Json_decodeNull;
-var $elm$json$Json$Decode$oneOf = _Json_oneOf;
-var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
-	function (pathDecoder, valDecoder, fallback) {
-		var nullOr = function (decoder) {
-			return $elm$json$Json$Decode$oneOf(
-				_List_fromArray(
-					[
-						decoder,
-						$elm$json$Json$Decode$null(fallback)
-					]));
-		};
-		var handleResult = function (input) {
-			var _v0 = A2($elm$json$Json$Decode$decodeValue, pathDecoder, input);
-			if (!_v0.$) {
-				var rawValue = _v0.a;
-				var _v1 = A2(
-					$elm$json$Json$Decode$decodeValue,
-					nullOr(valDecoder),
-					rawValue);
-				if (!_v1.$) {
-					var finalResult = _v1.a;
-					return $elm$json$Json$Decode$succeed(finalResult);
-				} else {
-					var finalErr = _v1.a;
-					return $elm$json$Json$Decode$fail(
-						$elm$json$Json$Decode$errorToString(finalErr));
-				}
-			} else {
-				return $elm$json$Json$Decode$succeed(fallback);
-			}
-		};
-		return A2($elm$json$Json$Decode$andThen, handleResult, $elm$json$Json$Decode$value);
-	});
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
-	function (key, valDecoder, fallback, decoder) {
-		return A2(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A3(
-				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
-				A2($elm$json$Json$Decode$field, key, $elm$json$Json$Decode$value),
-				valDecoder,
-				fallback),
-			decoder);
-	});
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
-	function (key, valDecoder, decoder) {
-		return A2(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2($elm$json$Json$Decode$field, key, valDecoder),
-			decoder);
-	});
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Main$storyDecoder = function (id) {
-	return A3(
-		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'title',
-		$elm$json$Json$Decode$string,
-		A4(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-			'url',
-			$elm$json$Json$Decode$string,
-			'https://news.ycombinator.com/item?id=' + $elm$core$String$fromInt(id),
-			A2(
-				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded,
-				id,
-				$elm$json$Json$Decode$succeed($author$project$Main$Story))));
+var $author$project$Main$apiStoryHelp = function (id) {
+	return A4(
+		$elm$json$Json$Decode$map3,
+		$author$project$Main$makeLoaded,
+		$elm$json$Json$Decode$succeed(id),
+		A2(
+			$elm$json$Json$Decode$map,
+			$author$project$Main$makeUrl(id),
+			$elm$json$Json$Decode$maybe(
+				A2($elm$json$Json$Decode$field, 'url', $elm$json$Json$Decode$string))),
+		A2($elm$json$Json$Decode$field, 'title', $elm$json$Json$Decode$string));
 };
+var $author$project$Main$apiStoryDecoder = A2(
+	$elm$json$Json$Decode$andThen,
+	$author$project$Main$apiStoryHelp,
+	A2($elm$json$Json$Decode$field, 'id', $elm$json$Json$Decode$int));
 var $author$project$Main$getStory = function (id) {
 	return $elm$http$Http$get(
 		{
-			T: A2(
-				$elm$http$Http$expectJson,
-				$author$project$Main$GotStory,
-				$author$project$Main$storyDecoder(id)),
-			H: 'https://hacker-news.firebaseio.com/v0/item/' + ($elm$core$String$fromInt(id) + '.json')
+			V: A2($elm$http$Http$expectJson, $author$project$Main$GotStory, $author$project$Main$apiStoryDecoder),
+			y: 'https://hacker-news.firebaseio.com/v0/item/' + ($elm$core$String$fromInt(id) + '.json')
 		});
 };
+var $author$project$Main$hourLater = F2(
+	function (a, b) {
+		var millisB = $elm$time$Time$posixToMillis(b) + ((1000 * 60) * 60);
+		var millisA = $elm$time$Time$posixToMillis(a);
+		return _Utils_cmp(millisA, millisB) > 0;
+	});
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$setStorage = _Platform_outgoingPort('setStorage', $elm$core$Basics$identity);
 var $elm$core$List$takeReverse = F3(
 	function (n, list, kept) {
 		takeReverse:
@@ -6340,94 +6577,159 @@ var $elm$core$List$take = F2(
 	function (n, list) {
 		return A3($elm$core$List$takeFast, 0, n, list);
 	});
+var $author$project$Main$updateStoryList = F2(
+	function (newStory, stories) {
+		if (!newStory.$) {
+			var story = newStory.a;
+			return A2(
+				$elm$core$List$map,
+				function (s) {
+					if (!s.$) {
+						var loaded = s.a;
+						return $author$project$Main$Loaded(loaded);
+					} else {
+						var id = s.a.q;
+						return _Utils_eq(id, story.q) ? $author$project$Main$Loaded(
+							{q: id, H: story.H, y: story.y}) : $author$project$Main$Id(
+							{q: id});
+					}
+				},
+				stories);
+		} else {
+			return stories;
+		}
+	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		if (!msg.$) {
-			var result = msg.a;
-			if (!result.$) {
-				var storyIds = result.a;
-				var top30 = A2($elm$core$List$take, 30, storyIds);
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{G: top30}),
-					$elm$core$Platform$Cmd$batch(
-						A2($elm$core$List$map, $author$project$Main$getStory, top30)));
-			} else {
-				var err = result.a;
-				switch (err.$) {
-					case 0:
-						var url = err.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{r: url}),
-							$elm$core$Platform$Cmd$none);
-					case 4:
-						var body = err.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{r: body}),
-							$elm$core$Platform$Cmd$none);
-					default:
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 0:
+				var result = msg.a;
+				if (!result.$) {
+					var storyIds = result.a;
+					var top30 = A2($elm$core$List$take, 30, storyIds);
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								l: A2($elm$core$List$map, $author$project$Main$makeId, top30)
+							}),
+						$elm$core$Platform$Cmd$batch(
+							A2($elm$core$List$map, $author$project$Main$getStory, top30)));
+				} else {
+					var err = result.a;
+					switch (err.$) {
+						case 0:
+							var url = err.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										m: $elm$core$Maybe$Just(url)
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 4:
+							var body = err.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										m: $elm$core$Maybe$Just(body)
+									}),
+								$elm$core$Platform$Cmd$none);
+						default:
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
 				}
-			}
-		} else {
-			var result = msg.a;
-			if (!result.$) {
-				var story = result.a;
+			case 1:
+				var result = msg.a;
+				if (!result.$) {
+					var story = result.a;
+					var newModel = _Utils_update(
+						model,
+						{
+							l: A2($author$project$Main$updateStoryList, story, model.l)
+						});
+					return _Utils_Tuple2(
+						newModel,
+						A2($elm$core$Task$perform, $author$project$Main$UpdatedCache, $elm$time$Time$now));
+				} else {
+					var err = result.a;
+					switch (err.$) {
+						case 0:
+							var url = err.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										m: $elm$core$Maybe$Just(url)
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 4:
+							var body = err.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										m: $elm$core$Maybe$Just(body)
+									}),
+								$elm$core$Platform$Cmd$none);
+						default:
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
+				}
+			case 2:
+				var diskModel = msg.a;
+				var now = msg.b;
+				var _v5 = diskModel.r;
+				if (_v5.$ === 1) {
+					var updatedTime = _v5.a;
+					return A2($author$project$Main$hourLater, now, updatedTime) ? _Utils_Tuple2(model, $author$project$Main$getTopStories) : _Utils_Tuple2(diskModel, $elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(model, $author$project$Main$getTopStories);
+				}
+			default:
+				var now = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							B: A3($elm$core$Dict$insert, story.Y, story, model.B)
+							r: $author$project$Main$At(now)
 						}),
-					$elm$core$Platform$Cmd$none);
-			} else {
-				var err = result.a;
-				switch (err.$) {
-					case 0:
-						var url = err.a;
-						return _Utils_Tuple2(
+					$author$project$Main$setStorage(
+						$author$project$Main$encodeModel(
 							_Utils_update(
 								model,
-								{r: url}),
-							$elm$core$Platform$Cmd$none);
-					case 4:
-						var body = err.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{r: body}),
-							$elm$core$Platform$Cmd$none);
-					default:
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-				}
-			}
+								{
+									r: $author$project$Main$At(now)
+								}))));
 		}
 	});
+var $elm$json$Json$Decode$value = _Json_decodeValue;
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
-		return {az: body, aq: title};
+		return {az: body, H: title};
 	});
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$main_ = _VirtualDom_node('main');
 var $elm$html$Html$ol = _VirtualDom_node('ol');
-var $elm$html$Html$p = _VirtualDom_node('p');
-var $author$project$Main$sortStories = F2(
-	function (stories, topIds) {
-		return A2(
-			$elm$core$List$filterMap,
-			function (key) {
-				return A2($elm$core$Dict$get, key, stories);
-			},
-			topIds);
-	});
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Main$viewErr = function (err) {
+	if (!err.$) {
+		var msg = err.a;
+		return A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(msg)
+				]));
+	} else {
+		return $elm$html$Html$text('');
+	}
+};
 var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -6443,22 +6745,28 @@ var $elm$html$Html$Attributes$href = function (url) {
 };
 var $elm$html$Html$li = _VirtualDom_node('li');
 var $author$project$Main$viewStory = function (story) {
-	return A2(
-		$elm$html$Html$li,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$a,
+	if (!story.$) {
+		var loaded = story.a;
+		return $elm$core$Maybe$Just(
+			A2(
+				$elm$html$Html$li,
+				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$href(story.H)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text(story.aq)
-					]))
-			]));
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href(loaded.y)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(loaded.H)
+							]))
+					])));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
 };
 var $author$project$Main$view = function (model) {
 	return A2(
@@ -6467,26 +6775,23 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$h1,
+				$elm$html$Html$main_,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Quiet Hacker News')
-					])),
-				A2(
-				$elm$html$Html$p,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(model.r)
-					])),
-				A2(
-				$elm$html$Html$ol,
-				_List_Nil,
-				A2(
-					$elm$core$List$map,
-					$author$project$Main$viewStory,
-					A2($author$project$Main$sortStories, model.B, model.G)))
+						A2(
+						$elm$html$Html$h1,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Quiet Hacker News')
+							])),
+						$author$project$Main$viewErr(model.m),
+						A2(
+						$elm$html$Html$ol,
+						_List_Nil,
+						A2($elm$core$List$filterMap, $author$project$Main$viewStory, model.l))
+					]))
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$document(

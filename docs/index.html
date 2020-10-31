@@ -15,15 +15,14 @@
 
     // Extract the stored data from previous sessions.
     const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    const flags = storedData ? JSON.parse(storedData) : [];
+    const args = storedData ? JSON.parse(storedData) : null;
 
-    console.log(flags);
-
-    const app = Elm.Main.init({ node: document.getElementById("myapp"), flags: flags });
+    const app = Elm.Main.init({ node: document.getElementById("myapp"), flags: args });
 
     console.log(app);
 
     app.ports.setStorage.subscribe(function (state) {
+      console.log(state);
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
     });
   </script>
