@@ -20,9 +20,13 @@ main =
     Browser.document
         { init = init
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = \model -> Sub.none
         , view = view
         }
+
+
+
+-- TYPES
 
 
 type alias Url =
@@ -61,11 +65,19 @@ type alias Model =
     { stories : List Story, err : Maybe String, lastUpdated : Time }
 
 
+
+-- MSG
+
+
 type Msg
     = GotTopStories (Result Http.Error (List Int))
     | GotStory (Result Http.Error Story)
     | LoadedFromLocalStorage Model Time.Posix
     | UpdatedCache Time.Posix
+
+
+
+-- DECODE
 
 
 topStoriesDecoder : D.Decoder (List Int)
@@ -157,6 +169,10 @@ modelDecoder =
         lastUpdatedDecoder
 
 
+
+-- ENCODE
+
+
 encodeStory : Story -> E.Value
 encodeStory story =
     case story of
@@ -184,11 +200,6 @@ encodeModel model =
             E.object [ ( "stories", E.list encodeStory model.stories ) ]
 
 
-before : Time.Posix -> Time.Posix -> Bool
-before a b =
-    Time.posixToMillis a < Time.posixToMillis b
-
-
 {-| If a is an an hour or more later than b
 -}
 hourLater : Time.Posix -> Time.Posix -> Bool
@@ -201,6 +212,10 @@ hourLater a b =
             Time.posixToMillis b + 1000 * 60 * 60
     in
     millisA > millisB
+
+
+
+-- INIT
 
 
 init : E.Value -> ( Model, Cmd Msg )
@@ -219,6 +234,10 @@ init args =
 
                 _ ->
                     ( { stories = [], err = Just "Unknown error", lastUpdated = Never }, getTopStories )
+
+
+
+-- UPDATE
 
 
 updateStoryList : Story -> List Story -> List Story
@@ -330,22 +349,6 @@ port setStorage : E.Value -> Cmd msg
 
 
 
--- SUBSCRIPTIONS
-
-
-api_url : String
-api_url =
-    "https://hacker-news.firebaseio.com/v0/topstories.json"
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    case model of
-        _ ->
-            Sub.none
-
-
-
 -- VIEW
 
 
@@ -363,11 +366,6 @@ viewErr err =
 
         Nothing ->
             Html.text ""
-
-
-sortStories : Dict.Dict Int Story -> List Int -> List Story
-sortStories stories topIds =
-    List.filterMap (\key -> Dict.get key stories) topIds
 
 
 viewStory : Story -> Maybe (Html.Html Msg)
