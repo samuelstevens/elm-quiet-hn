@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="main.debug.js"></script>
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script type="text/javascript">
+    const LOCAL_STORAGE_KEY = "elm-quiet-hn-state";
+
+    // Extract the stored data from previous sessions.
+    const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const flags = storedData ? JSON.parse(storedData) : [];
+
+    console.log(flags);
+
+    const app = Elm.Main.init({ node: document.getElementById("myapp"), flags: flags });
+
+    console.log(app);
+
+    app.ports.setStorage.subscribe(function (state) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+    });
+  </script>
+</body>
+
+</html>
