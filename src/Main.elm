@@ -355,7 +355,15 @@ port setStorage : E.Value -> Cmd msg
 view : Model -> Browser.Document Msg
 view model =
     Browser.Document "Quiet HN - Elm"
-        [ Html.main_ [] [ Html.h1 [] [ Html.text "Quiet Hacker News" ], viewErr model.err, Html.ol [] (List.filterMap viewStory model.stories) ] ]
+        [ Html.main_ []
+            [ Html.h1 [] [ Html.text "Quiet Hacker News" ]
+            , viewErr model.err
+            , Html.ol [] (List.filterMap viewStory model.stories)
+            , Html.p []
+                [ Html.a [ Html.Attributes.href "/projects/quiet-hn" ] [ Html.text "About" ]
+                ]
+            ]
+        ]
 
 
 viewErr : Maybe String -> Html.Html Msg

@@ -6317,9 +6317,6 @@ var $author$project$Main$init = function (args) {
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (model) {
-	return $elm$core$Platform$Sub$none;
-};
 var $author$project$Main$UpdatedCache = function (a) {
 	return {$: 3, a: a};
 };
@@ -6709,12 +6706,26 @@ var $elm$browser$Browser$Document = F2(
 	function (title, body) {
 		return {az: body, H: title};
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$html$Html$main_ = _VirtualDom_node('main');
 var $elm$html$Html$ol = _VirtualDom_node('ol');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Main$viewErr = function (err) {
 	if (!err.$) {
 		var msg = err.a;
@@ -6728,20 +6739,6 @@ var $author$project$Main$viewErr = function (err) {
 	} else {
 		return $elm$html$Html$text('');
 	}
-};
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$li = _VirtualDom_node('li');
 var $author$project$Main$viewStory = function (story) {
@@ -6790,10 +6787,33 @@ var $author$project$Main$view = function (model) {
 						A2(
 						$elm$html$Html$ol,
 						_List_Nil,
-						A2($elm$core$List$filterMap, $author$project$Main$viewStory, model.l))
+						A2($elm$core$List$filterMap, $author$project$Main$viewStory, model.l)),
+						A2(
+						$elm$html$Html$p,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$a,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$href('/projects/quiet-hn')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('About')
+									]))
+							]))
 					]))
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$document(
-	{aG: $author$project$Main$init, aR: $author$project$Main$subscriptions, aT: $author$project$Main$update, aU: $author$project$Main$view});
+	{
+		aG: $author$project$Main$init,
+		aR: function (model) {
+			return $elm$core$Platform$Sub$none;
+		},
+		aT: $author$project$Main$update,
+		aU: $author$project$Main$view
+	});
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));
