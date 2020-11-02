@@ -6801,7 +6801,18 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('About')
+										$elm$html$Html$text('[About]')
+									])),
+								$elm$html$Html$text(' '),
+								A2(
+								$elm$html$Html$a,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$href('https://github.com/samuelstevens/elm-quiet-hn')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('[Source]')
 									]))
 							]))
 					]))

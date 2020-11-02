@@ -360,7 +360,9 @@ view model =
             , viewErr model.err
             , Html.ol [] (List.filterMap viewStory model.stories)
             , Html.p []
-                [ Html.a [ Html.Attributes.href "/projects/quiet-hn" ] [ Html.text "About" ]
+                [ Html.a [ Html.Attributes.href "/projects/quiet-hn" ] [ Html.text "[About]" ]
+                , Html.text " "
+                , Html.a [ Html.Attributes.href "https://github.com/samuelstevens/elm-quiet-hn" ] [ Html.text "[Source]" ]
                 ]
             ]
         ]
