@@ -37,12 +37,15 @@ type alias Id =
     Int
 
 
+type alias StoryInfo =
+    { id : Int
+    , url : Url
+    , title : String
+    }
+
+
 type Story
-    = Loaded
-        { id : Int
-        , url : Url
-        , title : String
-        }
+    = Loaded StoryInfo
     | Id { id : Id }
 
 
@@ -54,6 +57,11 @@ makeLoaded id url title =
 makeId : Int -> Story
 makeId id =
     Id { id = id }
+
+
+isHNSpecific : StoryInfo -> Bool
+isHNSpecific story =
+    String.startsWith "Ask HN:" story.title 
 
 
 type Time
@@ -270,10 +278,10 @@ update msg model =
             case result of
                 Ok storyIds ->
                     let
-                        top30 =
-                            List.take 30 storyIds
+                        top50 =
+                            List.take 50 storyIds
                     in
-                    ( { model | stories = List.map makeId top30 }, Cmd.batch (List.map getStory top30) )
+                    ( { model | stories = List.map makeId top50 }, Cmd.batch (List.map getStory top50) )
 
                 Err err ->
                     case err of
@@ -358,7 +366,7 @@ view model =
         [ Html.main_ []
             [ Html.h1 [] [ Html.text "Quiet Hacker News" ]
             , viewErr model.err
-            , Html.ol [] (List.filterMap viewStory model.stories)
+            , Html.ol [] ((List.filterMap viewStory model.stories) |> List.take 30)
             , Html.p []
                 [ Html.a [ Html.Attributes.href "/projects/quiet-hn" ] [ Html.text "[About]" ]
                 , Html.text " "
@@ -382,8 +390,12 @@ viewStory : Story -> Maybe (Html.Html Msg)
 viewStory story =
     case story of
         Loaded loaded ->
-            Just
-                (Html.li [] [ Html.a [ Html.Attributes.href loaded.url ] [ Html.text loaded.title ] ])
+            if isHNSpecific loaded then
+                Nothing
+
+            else
+                Just
+                    (Html.li [] [ Html.a [ Html.Attributes.href loaded.url ] [ Html.text loaded.title ] ])
 
         Id _ ->
             Nothing
